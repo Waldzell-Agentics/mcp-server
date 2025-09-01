@@ -13,11 +13,7 @@ startCommand:
         title: "Mapbox access_token"
         description: "Your Mapbox secret access token"
         sensitive: true
-  commandFunction: |
-    (config) => ({
-      command: 'node',
-      args: ['dist/index.js'],
-      env: {
-        MAPBOX_ACCESS_TOKEN: config.MAPBOX_ACCESS_TOKEN
-      }
-    })
+      VERBOSE_ERRORS:
+        type: "string"
+        default: "false"
+        description: "Enable detailed error messages for debugging"
