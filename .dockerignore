@@ -6,3 +6,13 @@ coverage
 .github
 .husky
 .vscode
+*.log
+.DS_Store
+.env*
+!.env.example
+.nyc_output
+.coverage
+.vscode/
+.idea/
+*.swp
+*.swo

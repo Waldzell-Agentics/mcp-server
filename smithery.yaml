@@ -1,0 +1,75 @@
+version: 1.0
+name: mapbox-mcp-server
+displayName: Mapbox MCP Server
+description: High-performance geospatial intelligence via Mapbox APIs with optimized resource usage
+author: Mapbox, Inc.
+license: BSD-3-Clause
+
+deployment:
+  type: docker
+  dockerfile: Dockerfile
+  port: 8080
+  # Performance optimizations
+  buildArgs:
+    - DOCKER_BUILD=true
+  healthcheck:
+    path: /health
+    interval: 30s
+    timeout: 3s
+    retries: 3
+    
+environment:
+  required:
+    - name: MAPBOX_ACCESS_TOKEN
+      description: Mapbox API access token for geospatial services
+      sensitive: true
+  optional:
+    - name: VERBOSE_ERRORS
+      description: Enable detailed error messages for debugging
+      default: "false"
+      
+resources:
+  # Optimized for performance and cost efficiency
+  memory: 128Mi        # Minimal memory footprint with Alpine base
+  cpu: 0.25            # Quarter CPU for efficient resource utilization
+  storage: 100Mi       # Minimal storage for built application
+  
+scaling:
+  # Performance-tuned scaling configuration
+  minReplicas: 0       # Scale to zero when unused for cost efficiency
+  maxReplicas: 3       # Limited concurrency for predictable performance
+  targetCPU: 70        # Scale up at 70% CPU to maintain responsiveness
+  targetMemory: 80     # Scale up at 80% memory to prevent OOM
+  scaleDownDelay: 30s  # Quick scale-down for cost optimization
+  scaleUpDelay: 10s    # Fast scale-up for responsiveness
+
+performance:
+  # Container startup optimizations
+  readinessProbe:
+    initialDelaySeconds: 2
+    periodSeconds: 5
+    timeoutSeconds: 2
+    successThreshold: 1
+    failureThreshold: 3
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 30
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 3
+    
+security:
+  # Security optimizations for production
+  runAsNonRoot: true
+  runAsUser: 1001
+  readOnlyRootFilesystem: false  # Set to false as Node.js may need temp writes
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+      
+# Build performance optimizations
+build:
+  cache: true
+  parallel: true
+  target: production
