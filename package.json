@@ -3,7 +3,6 @@
   "version": "0.3.0",
   "description": "Mapbox MCP server.",
   "main": "dist/index.js",
-  "module": "dist/index-esm.js",
   "typings": "dist/index.d.ts",
   "type": "module",
   "bin": {
