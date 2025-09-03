@@ -1,0 +1,19 @@
+runtime: "container"
+build:
+  dockerfile: "Dockerfile"
+  dockerBuildPath: "."
+startCommand:
+  type: "http"
+  configSchema:
+    type: "object"
+    required: ["MAPBOX_ACCESS_TOKEN"]
+    properties:
+      MAPBOX_ACCESS_TOKEN:
+        type: "string"
+        title: "Mapbox access_token"
+        description: "Your Mapbox secret access token"
+        sensitive: true
+      VERBOSE_ERRORS:
+        type: "string"
+        default: "false"
+        description: "Enable detailed error messages for debugging"

@@ -14,8 +14,10 @@
     "format": "prettier --check \"./src/**/*.{ts,tsx,js,json,md}\"",
     "format:fix": "prettier --write \"./src/**/*.{ts,tsx,js,json,md}\"",
     "prepare": "husky && node .husky/setup-hooks.js",
+    "prepare:docker": "echo 'Skipping husky in Docker build'",
     "test": "jest",
     "build": "npm run prepare && npm run build:esm && npm run build:cjs && npm run generate-version && node scripts/add-shebang.cjs",
+    "build:docker": "npm run prepare:docker && npm run build:esm && npm run build:cjs && npm run generate-version && node scripts/add-shebang.cjs",
     "build:esm": "node scripts/build-helpers.cjs esm-package && tsc -p tsconfig.json",
     "build:cjs": "node scripts/build-helpers.cjs cjs-package && tsc -p tsconfig.json",
     "generate-version": "node scripts/build-helpers.cjs generate-version"
